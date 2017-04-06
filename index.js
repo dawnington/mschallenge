@@ -1,0 +1,71 @@
+const express = require('express');
+const path = require('path');
+const pg = require('pg');
+const bodyParser = require('body-parser');
+
+const conString = 'postgres://localhost/dawntran';
+
+const app = express();
+const port = 3000;
+
+app.use(express.static(path.join(__dirname, '/public')));
+
+app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
+
+app.listen(port, (err) => {
+  if (err) {
+    return console.log('something bad happened', err);
+  }
+
+  console.log(`server is listening on ${port}`);
+});
+
+app.get('/', (request, response) => {
+  response.render('index');
+});
+
+// app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true,
+}));
+
+app.get('/subscriptions', (req, res, next) => {
+  pg.connect(conString, (err, client, done) => {
+    if (err) {
+      // pass the error to the express error handler
+      return next(err);
+    }
+    client.query('SELECT name, amount, date FROM subscriptions;', [], (err, result) => {
+      done();
+
+      if (err) {
+        // pass the error to the express error handler
+        return next(err);
+      }
+
+      res.json(result.rows);
+    });
+  });
+});
+
+app.post('/subscriptions', (req, res, next) => {
+  const subscription = req.body;
+
+  pg.connect(conString, (err, client, done) => {
+    console.log('are we here?');
+    console.log(subscription);
+    if (err) {
+      // pass the error to the express error handler
+      return next(err);
+    }
+    client.query('INSERT INTO subscriptions (name, amount, date) VALUES ($1, $2, $3);', [subscription.name, subscription.amount, subscription.date], function (err, result) {
+      done();
+
+      if (err) {
+        return next(err)
+      }
+
+      res.sendStatus(200);
+    });
+  });
+});
