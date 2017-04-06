@@ -1,11 +1,10 @@
 import createRequestTypes from '../utils/actionUtils';
 
+export const INITIALIZE_PAGE = 'INITIALIZE_PAGE';
+export const initializePage = () => ({ type: INITIALIZE_PAGE });
+
 export const GET_SUBSCRIPTIONS = 'GET_SUBSCRIPTIONS';
-export function getSubscriptions() {
-  return {
-    type: GET_SUBSCRIPTIONS,
-  };
-}
+export const getSubscriptions = () => ({ type: GET_SUBSCRIPTIONS });
 
 export const FETCH_SUBSCRIPTIONS = createRequestTypes('FETCH_SUBSCRIPTIONS');
 export const fetchSubscriptions = {
@@ -22,10 +21,8 @@ export const fetchSubscriptions = {
   }),
 };
 
+export const UPDATE_INPUT = 'UPDATE_INPUT';
+export const updateInput = (field, value) => ({ type: UPDATE_INPUT, field, value });
+
 export const ADD_SUBSCRIPTION = 'ADD_SUBSCRIPTION';
-export function addSubscription(subscription) {
-  return {
-    type: ADD_SUBSCRIPTION,
-    subscription,
-  };
-}
+export const addSubscription = subscription => ({ type: ADD_SUBSCRIPTION, subscription });

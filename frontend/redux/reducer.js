@@ -8,9 +8,14 @@ const EmptySubscription = new Record({
 });
 
 const initialState = new Map({
+  initialized: false,
   subscriptions: new List(),
   emptySubscription: new EmptySubscription(),
 });
+
+function initializeState(state) {
+  return state.set('initialized', true);
+}
 
 function addSubscriptions(state, subscriptions) {
   return state.set('subscriptions', new List(subscriptions));
@@ -18,8 +23,9 @@ function addSubscriptions(state, subscriptions) {
 
 export default function reducer(state = initialState, action) {
   const reducers = {
-    [actions.FETCH_SUBSCRIPTIONS.SUCCESS]: () => addSubscriptions(state, action.subscriptions),
-    'DEFAULT': () => state,
+    [actions.INITIALIZE_PAGE]                : () => initializeState(state),
+    [actions.FETCH_SUBSCRIPTIONS.SUCCESS]   : () => addSubscriptions(state, action.subscriptions),
+    'DEFAULT'                               : () => state,
   };
 
   return ((action && reducers[action.type]) ? reducers[action.type] : reducers['DEFAULT'])();

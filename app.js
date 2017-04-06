@@ -3,7 +3,7 @@ const path = require('path');
 const pg = require('pg');
 const bodyParser = require('body-parser');
 
-const conString = 'postgres://localhost/dawntran';
+const conString = 'postgres://localhost/ms_app';
 
 const app = express();
 const port = 3000;

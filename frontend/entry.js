@@ -2,7 +2,9 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import configureStore from './redux/store';
+import Main from './components/Main';
 
 require('babel-polyfill');
 
@@ -10,11 +12,12 @@ injectTapEventPlugin();
 
 const store = configureStore();
 
-import Main from './components/Main';
 
 const App = (
   <Provider store={store}>
-    <Main />
+    <MuiThemeProvider>
+      <Main />
+    </MuiThemeProvider>
   </Provider>
 );
 
