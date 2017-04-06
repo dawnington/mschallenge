@@ -11,6 +11,8 @@ const Main = ({
   actions: {
     initializePage,
     getSubscriptions,
+    updateInput,
+    addSubscription,
   },
 }) => {
   if (!state.get('initialized')) {
@@ -19,11 +21,17 @@ const Main = ({
   }
 
   const subscriptions = state.get('subscriptions').toJS();
-  const emptySubscription = state.get('emptySubscription').toJS();
+  const newSubscription = state.get('newSubscription');
+  const formErrors = state.get('formErrors');
 
   return (
     <div>
-      <SubscriptionForm emptySubscription={emptySubscription} />
+      <SubscriptionForm
+        newSubscription={newSubscription}
+        formErrors={formErrors}
+        updateInput={updateInput}
+        addSubscription={addSubscription}
+      />
       <SubscriptionsTable subscriptions={subscriptions} />
     </div>
   );

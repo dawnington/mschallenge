@@ -26,3 +26,19 @@ export const updateInput = (field, value) => ({ type: UPDATE_INPUT, field, value
 
 export const ADD_SUBSCRIPTION = 'ADD_SUBSCRIPTION';
 export const addSubscription = subscription => ({ type: ADD_SUBSCRIPTION, subscription });
+
+export const POST_SUBSCRIPTION = createRequestTypes('POST_SUBSCRIPTION');
+export const postSubscription = {
+  request: subscription => ({
+    type: POST_SUBSCRIPTION.REQUEST,
+    subscription,
+  }),
+  success: subscription => ({
+    type: POST_SUBSCRIPTION.SUCCESS,
+    subscription,
+  }),
+  failure: errors => ({
+    type: POST_SUBSCRIPTION.FAILURE,
+    errors,
+  }),
+};

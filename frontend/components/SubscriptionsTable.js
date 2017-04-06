@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import moment from 'moment';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 
 const SubscriptionsTable = ({
@@ -8,6 +9,7 @@ const SubscriptionsTable = ({
     <Table>
       <TableHeader>
         <TableRow>
+          <TableHeaderColumn>ID</TableHeaderColumn>
           <TableHeaderColumn>Name</TableHeaderColumn>
           <TableHeaderColumn>Amount</TableHeaderColumn>
           <TableHeaderColumn>Date</TableHeaderColumn>
@@ -17,9 +19,10 @@ const SubscriptionsTable = ({
         {
           subscriptions.map(sub => (
             <TableRow key={sub.name}>
+              <TableRowColumn>{sub.id}</TableRowColumn>
               <TableRowColumn>{sub.name}</TableRowColumn>
               <TableRowColumn>{sub.amount}</TableRowColumn>
-              <TableRowColumn>{sub.date}</TableRowColumn>
+              <TableRowColumn>{moment(sub.date).format('MMMM Do YYYY')}</TableRowColumn>
             </TableRow>
           ))
         }

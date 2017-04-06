@@ -8,5 +8,9 @@ export default function Subscriptions() {
       .get(url, {})
       .then(response => response)
       .catch(error => error.response),
+    create: subscription => getInstance()
+      .post(url, subscription)
+      .then(response => response)
+      .catch(error => error.response),
   };
 }

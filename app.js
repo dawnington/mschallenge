@@ -24,22 +24,20 @@ app.get('/', (request, response) => {
   response.render('index');
 });
 
-// app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: true,
-}));
+app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({
+//   extended: true,
+// }));
 
 app.get('/subscriptions', (req, res, next) => {
   pg.connect(conString, (err, client, done) => {
     if (err) {
-      // pass the error to the express error handler
       return next(err);
     }
-    client.query('SELECT name, amount, date FROM subscriptions;', [], (err, result) => {
+    client.query('SELECT id, name, amount, date FROM subscriptions;', [], (err, result) => {
       done();
 
       if (err) {
-        // pass the error to the express error handler
         return next(err);
       }
 
@@ -52,10 +50,8 @@ app.post('/subscriptions', (req, res, next) => {
   const subscription = req.body;
 
   pg.connect(conString, (err, client, done) => {
-    console.log('are we here?');
     console.log(subscription);
     if (err) {
-      // pass the error to the express error handler
       return next(err);
     }
     client.query('INSERT INTO subscriptions (name, amount, date) VALUES ($1, $2, $3);', [subscription.name, subscription.amount, subscription.date], function (err, result) {

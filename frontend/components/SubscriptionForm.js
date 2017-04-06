@@ -1,31 +1,58 @@
 import React, { PropTypes } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { updateInput, addSubscription } from '../redux/actions';
 import TextField from 'material-ui/TextField';
+import DatePicker from 'material-ui/DatePicker';
+import FlatButton from 'material-ui/FlatButton';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 
-const SubscriptionForm = ({ emptySubscription }) => {
+const SubscriptionForm = ({
+  newSubscription,
+  formErrors,
+  updateInput,
+  addSubscription,
+}) => {
+  const handleSubmit = () => {
+    addSubscription(newSubscription);
+  };
+
   return (
-    <div>
-    
+    <div className="new-form">
+      <form onSubmit={handleSubmit}>
+        <TextField
+          floatingLabelText="Name"
+          value={newSubscription.get('name')}
+          errorText={formErrors.get('name')}
+          onChange={(event, value) => updateInput('name', value)}
+        />
+        <TextField
+          floatingLabelText="Amount"
+          errorText={formErrors.get('amount')}
+          value={newSubscription.get('amount')}
+          onChange={(event, value) => updateInput('amount', value)}
+        />
+        <DatePicker
+          hintText="Date"
+          onChange={(event, value) => updateInput('date', value)}
+        />
+        <FloatingActionButton
+          mini={true}
+          onTouchTap={handleSubmit}
+        >
+          <ContentAdd />
+        </FloatingActionButton>
+      </form>
     </div>
   );
 };
 
 // redux
 
-const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators({
-    updateInput,
-    addSubscription,
-  }, dispatch),
-});
-
 SubscriptionForm.propTypes = {
-  emptySubscription: PropTypes.object.isRequired,
-  actions: PropTypes.object.isRequired,
+  newSubscription: PropTypes.object.isRequired,
+  formErrors: PropTypes.object.isRequired,
+  updateInput: PropTypes.func.isRequired,
+  addSubscription: PropTypes.func.isRequired,
 };
 
-export default connect(
-  mapDispatchToProps,
-)(SubscriptionForm);
+export default connect()(SubscriptionForm);
