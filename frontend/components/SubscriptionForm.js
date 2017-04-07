@@ -5,6 +5,18 @@ import DatePicker from 'material-ui/DatePicker';
 import FlatButton from 'material-ui/FlatButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import Card from 'material-ui/Card';
+
+const styles = {
+  card: {
+    borderRadius: '15px',
+    width: '300px',
+    height: '300px',
+  },
+  form: {
+    margin: '20px',
+  },
+};
 
 const SubscriptionForm = ({
   newSubscription,
@@ -17,32 +29,32 @@ const SubscriptionForm = ({
   };
 
   return (
-    <div className="new-form">
-      <form onSubmit={handleSubmit}>
-        <TextField
-          floatingLabelText="Name"
-          value={newSubscription.get('name')}
-          errorText={formErrors.get('name')}
-          onChange={(event, value) => updateInput('name', value)}
-        />
-        <TextField
-          floatingLabelText="Amount"
-          errorText={formErrors.get('amount')}
-          value={newSubscription.get('amount')}
-          onChange={(event, value) => updateInput('amount', value)}
-        />
-        <DatePicker
-          hintText="Date"
-          onChange={(event, value) => updateInput('date', value)}
-        />
-        <FloatingActionButton
-          mini={true}
-          onTouchTap={handleSubmit}
-        >
-          <ContentAdd />
-        </FloatingActionButton>
-      </form>
-    </div>
+      <div style={styles.form}>
+        <form onSubmit={handleSubmit}>
+          <TextField
+            floatingLabelText="Name"
+            value={newSubscription.get('name')}
+            errorText={formErrors.get('name')}
+            onChange={(event, value) => updateInput('name', value)}
+          />
+          <TextField
+            floatingLabelText="Amount"
+            errorText={formErrors.get('amount')}
+            value={newSubscription.get('amount')}
+            onChange={(event, value) => updateInput('amount', value)}
+          />
+          <DatePicker
+            hintText="Date"
+            onChange={(event, value) => updateInput('date', value)}
+          />
+          <FloatingActionButton
+            mini={true}
+            onTouchTap={handleSubmit}
+          >
+            <ContentAdd />
+          </FloatingActionButton>
+        </form>
+      </div>
   );
 };
 

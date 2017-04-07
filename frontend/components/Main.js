@@ -3,6 +3,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../redux/actions';
 
+import RevenueCard from './RevenueCard';
+import RevenueChart from './RevenueChart';
 import SubscriptionsTable from './SubscriptionsTable';
 import SubscriptionForm from './SubscriptionForm';
 
@@ -20,22 +22,25 @@ const Main = ({
     getSubscriptions();
   }
 
-  const subscriptions = state.get('subscriptions').toJS();
+  const subscriptions = state.get('subscriptions');
   const newSubscription = state.get('newSubscription');
   const formErrors = state.get('formErrors');
 
   return (
-    <div>
-      <SubscriptionForm
-        newSubscription={newSubscription}
-        formErrors={formErrors}
-        updateInput={updateInput}
-        addSubscription={addSubscription}
-      />
+    <div className="main">
+      <RevenueCard subscriptions={subscriptions} />
+      <RevenueChart subscriptions={subscriptions} />
       <SubscriptionsTable subscriptions={subscriptions} />
     </div>
   );
 };
+
+// <SubscriptionForm
+//   newSubscription={newSubscription}
+//   formErrors={formErrors}
+//   updateInput={updateInput}
+//   addSubscription={addSubscription}
+// />
 
 // redux
 

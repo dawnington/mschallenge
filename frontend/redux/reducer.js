@@ -1,4 +1,4 @@
-import { Map, Record, List } from 'immutable';
+import { Map, Record } from 'immutable';
 import moment from 'moment';
 import * as actions from './actions';
 
@@ -10,7 +10,8 @@ const EmptySubscription = new Record({
 
 const initialState = new Map({
   initialized: false,
-  subscriptions: new List(),
+  display: 'table',
+  subscriptions: new Map(),
   newSubscription: new EmptySubscription(),
   formErrors: new EmptySubscription(),
 });
@@ -20,13 +21,13 @@ function initializeState(state) {
 }
 
 function loadSubscriptions(state, subscriptions) {
-  return state.set('subscriptions', new List(subscriptions));
-}
-
-function addSubscription(state, subscription) {
+  let newSubscriptions = new Map({});
+  subscriptions.forEach(subscription => {
+    newSubscriptions = newSubscriptions.set(subscription.id, subscription);
+  });
   return state
-    .set('subscriptions', state.get('subscriptions').push(subscription))
-    .set('newSubscription', new EmptySubscription())
+    .set('subscriptions', newSubscriptions)
+    .set('newSubscription', new EmptySubscription());
 }
 
 function updateForm(state, field, value) {
@@ -42,7 +43,6 @@ export default function reducer(state = initialState, action) {
     [actions.INITIALIZE_PAGE]               : () => initializeState(state),
     [actions.FETCH_SUBSCRIPTIONS.SUCCESS]   : () => loadSubscriptions(state, action.subscriptions),
     [actions.UPDATE_INPUT]                  : () => updateForm(state, action.field, action.value),
-    [actions.POST_SUBSCRIPTION.SUCCESS]     : () => addSubscription(state, action.subscription),
     [actions.POST_SUBSCRIPTION.FAILURE]     : () => addErrors(state, action.errors),
     'DEFAULT'                               : () => state,
   };
