@@ -6,18 +6,18 @@ const bodyParser = require('body-parser');
 const conString = 'postgres://localhost/ms_app';
 
 const app = express();
-const port = 3000;
+app.set('port', (process.env.PORT || 3000))
 
 app.use(express.static(path.join(__dirname, '/public')));
 app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
-app.listen(port, (err) => {
+app.listen(app.get('port'), (err) => {
   if (err) {
     return console.log('something bad happened', err);
   }
 
-  console.log(`server is listening on ${port}`);
+  console.log(`server is listening on ${app.get('port')}`);
 });
 
 app.get('/', (request, response) => {
