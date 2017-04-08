@@ -7,7 +7,7 @@ import ActionAccountCircle from 'material-ui/svg-icons/action/account-circle';
 import ActionAssessment from 'material-ui/svg-icons/action/assessment';
 import Paper from 'material-ui/Paper';
 
-import { currencyFormat, monthRevenue, yearToDate, totalMonthSubscriptions } from '../utils/revenueUtils';
+import { monthRevenue, yearToDate, previousMonthTotal } from '../utils/revenueUtils';
 
 const styles = {
   card: {
@@ -16,24 +16,25 @@ const styles = {
   icon: {
     flexBasis: '30%',
     height: '100%',
-    color: '#4ec71d',
+    color: "#D4DEEB",
   },
 };
 
 const RevenueCard = ({ subscriptions }) => {
-  const monthTotal = currencyFormat(monthRevenue(subscriptions));
-  const yearTotal = currencyFormat(yearToDate(subscriptions));
-  const totalSubscriptions = totalMonthSubscriptions(subscriptions);
+  const monthTotal = monthRevenue(subscriptions);
+  const yearTotal = yearToDate(subscriptions);
+  const lastMonthTotal = previousMonthTotal(subscriptions);
+  const totalSubscriptions = subscriptions.size;
   const cardTitle = `${moment().format('MMMM')} Revenue`
 
   return (
     <Paper>
       <div className="revenue-card">
-        <h3 className="revenue-card-title">Revenue Summary</h3>
+        <h3 className="card-title">Page Summary</h3>
         <div className="revenue-card-body">
           <div className="revenue-card-section">
             <ActionAccountBalance style={styles.icon} />
-            <div>
+            <div className="section-body">
               <h4 className="section-title">{cardTitle}</h4>
               <div className="revenue-number">
                 {monthTotal}
@@ -42,7 +43,7 @@ const RevenueCard = ({ subscriptions }) => {
           </div>
           <div className="revenue-card-section">
             <ActionTrendingUp style={styles.icon} />
-            <div>
+            <div className="section-body">
               <h4 className="section-title">Year To Date</h4>
               <div className="revenue-number">
                 {yearTotal}
@@ -51,8 +52,8 @@ const RevenueCard = ({ subscriptions }) => {
           </div>
           <div className="revenue-card-section">
             <ActionAccountCircle style={styles.icon} />
-            <div>
-              <h4 className="section-title">Total Month Subscriptions</h4>
+            <div className="section-body">
+              <h4 className="section-title">Total Subscriptions</h4>
               <div className="revenue-number">
                 {totalSubscriptions}
               </div>
@@ -60,10 +61,10 @@ const RevenueCard = ({ subscriptions }) => {
           </div>
           <div className="revenue-card-section">
             <ActionAssessment style={styles.icon} />
-            <div>
-              <h4 className="section-title">Some other thing</h4>
+            <div className="section-body">
+              <h4 className="section-title">Previous Month</h4>
               <div className="revenue-number">
-                {monthTotal}
+                {lastMonthTotal}
               </div>
             </div>
           </div>

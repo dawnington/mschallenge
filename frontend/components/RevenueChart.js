@@ -16,6 +16,7 @@ const RevenueChart = ({ subscriptions }) => {
 
   const options = {
     fill: true,
+    responsive: true,
     legend: {
       display: false,
     },
@@ -24,14 +25,21 @@ const RevenueChart = ({ subscriptions }) => {
         label: function(tooltipItem) {
           return currencyFormat(tooltipItem.yLabel);
         }
-      }
+      },
+      displayColors: false,
     },
     scales: {
       xAxes: [{
+        gridLines: {
+          display: false,
+        },
          ticks: {
          }
        }],
       yAxes: [{
+        gridLines: {
+          drawBorder: false,
+        },
         ticks: {
           beginAtZero: true,
           callback: function (value) { return currencyFormat(value); },
@@ -42,8 +50,9 @@ const RevenueChart = ({ subscriptions }) => {
 
   return (
     <Paper style={styles.paper}>
+      <h3 className="card-title">Revenue</h3>
       <div className="chart">
-        <Line data={data} options={options} />
+        <Line data={data} options={options} height={100} />
       </div>
     </Paper>
   );

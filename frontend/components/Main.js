@@ -15,6 +15,7 @@ const Main = ({
     getSubscriptions,
     updateInput,
     addSubscription,
+    toggleForm,
   },
 }) => {
   if (!state.get('initialized')) {
@@ -25,22 +26,22 @@ const Main = ({
   const subscriptions = state.get('subscriptions');
   const newSubscription = state.get('newSubscription');
   const formErrors = state.get('formErrors');
+  const formOpen = state.get('formOpen');
+  const anchorEl = state.get('anchorEl');
 
   return (
     <div className="main">
       <RevenueCard subscriptions={subscriptions} />
       <RevenueChart subscriptions={subscriptions} />
-      <SubscriptionsTable subscriptions={subscriptions} />
+      <SubscriptionsTable
+        subscriptions={subscriptions}
+        formOpen={formOpen}
+        toggleForm={toggleForm}
+        anchorEl={anchorEl}
+      />
     </div>
   );
 };
-
-// <SubscriptionForm
-//   newSubscription={newSubscription}
-//   formErrors={formErrors}
-//   updateInput={updateInput}
-//   addSubscription={addSubscription}
-// />
 
 // redux
 

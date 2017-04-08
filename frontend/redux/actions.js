@@ -21,6 +21,9 @@ export const fetchSubscriptions = {
   }),
 };
 
+export const TOGGLE_FORM = 'TOGGLE_FORM';
+export const toggleForm = (el) => ({ type: TOGGLE_FORM, el });
+
 export const UPDATE_INPUT = 'UPDATE_INPUT';
 export const updateInput = (field, value) => ({ type: UPDATE_INPUT, field, value });
 

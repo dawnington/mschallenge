@@ -10,7 +10,8 @@ const EmptySubscription = new Record({
 
 const initialState = new Map({
   initialized: false,
-  display: 'table',
+  formOpen: false,
+  anchorEl: null,
   subscriptions: new Map(),
   newSubscription: new EmptySubscription(),
   formErrors: new EmptySubscription(),
@@ -27,7 +28,20 @@ function loadSubscriptions(state, subscriptions) {
   });
   return state
     .set('subscriptions', newSubscriptions)
-    .set('newSubscription', new EmptySubscription());
+    .set('newSubscription', new EmptySubscription())
+    .set('formErrors', new EmptySubscription())
+    .set('formOpen', false);
+}
+
+function toggleForm(state, el) {
+  let updatedState = state
+    .set('formOpen', !state.get('formOpen'))
+    .set('newSubscription', new EmptySubscription())
+    .set('formErrors', new EmptySubscription());
+
+  if (el) { updatedState = updatedState.set('anchorEl', el) }
+
+  return updatedState;
 }
 
 function updateForm(state, field, value) {
@@ -42,6 +56,7 @@ export default function reducer(state = initialState, action) {
   const reducers = {
     [actions.INITIALIZE_PAGE]               : () => initializeState(state),
     [actions.FETCH_SUBSCRIPTIONS.SUCCESS]   : () => loadSubscriptions(state, action.subscriptions),
+    [actions.TOGGLE_FORM]                   : () => toggleForm(state, action.el),
     [actions.UPDATE_INPUT]                  : () => updateForm(state, action.field, action.value),
     [actions.POST_SUBSCRIPTION.FAILURE]     : () => addErrors(state, action.errors),
     'DEFAULT'                               : () => state,

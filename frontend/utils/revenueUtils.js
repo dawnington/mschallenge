@@ -23,16 +23,20 @@ function currentYear(subscription) {
   return moment(subscription.date).format('YYYY') === moment().format('YYYY');
 }
 
+function previousMonth(subscription) {
+  return moment(subscription.date).format('MM') === moment().subtract(1, 'month').add(1, 'day').format('MM');
+}
+
 export function monthRevenue(subscriptions) {
-  return batchTotal(subscriptions.filter(subscription => currentMonth(subscription)));
+  return currencyFormat(batchTotal(subscriptions.filter(subscription => currentMonth(subscription))));
 }
 
 export function yearToDate(subscriptions) {
-  return batchTotal(subscriptions.filter(subscription => currentYear(subscription)));
+  return currencyFormat(batchTotal(subscriptions.filter(subscription => currentYear(subscription))));
 }
 
-export function totalMonthSubscriptions(subscriptions) {
-  return subscriptions.filter(subscription => currentMonth(subscription)).size;
+export function previousMonthTotal(subscriptions) {
+  return currencyFormat(batchTotal(subscriptions.filter(subscription => previousMonth(subscription))));
 }
 
 function lastSixMonths() {
@@ -56,30 +60,30 @@ export function getRevenueData(subscriptions) {
     return moment(subscription.date).format('MM');
   });
   const sums = _.map(groups, batch => batchTotal(batch));
-  const data = _.reverse(_.values(sums));
+  let data = _.reverse(_.values(sums));
   while (data.length < 6) { data.unshift(0) }
+  data = _.takeRight(data, 6);
 
   return {
     labels: lastSixMonths(),
     datasets: [
       {
-        // label: "",
         fill: false,
         lineTension: 0.1,
-        backgroundColor: "rgba(75,192,192,0.4)",
-        borderColor: "rgba(75,192,192,1)",
+        backgroundColor: "rgb(14, 79, 206)",
+        borderColor: "rgb(14, 79, 206)",
         borderCapStyle: 'butt',
         borderDash: [],
         borderDashOffset: 0.0,
         borderJoinStyle: 'miter',
-        pointBorderColor: "rgba(75,192,192,1)",
-        pointBackgroundColor: "#fff",
+        pointBorderColor: "rgb(14, 79, 206)",
+        pointBackgroundColor: "rgb(14, 79, 206)",
         pointBorderWidth: 1,
-        pointHoverRadius: 5,
-        pointHoverBackgroundColor: "rgba(75,192,192,1)",
-        pointHoverBorderColor: "rgba(220,220,220,1)",
+        pointHoverRadius: 7,
+        pointHoverBackgroundColor: "rgb(14, 79, 206)",
+        pointHoverBorderColor: "rgb(14, 79, 206)",
         pointHoverBorderWidth: 2,
-        pointRadius: 1,
+        pointRadius: 5,
         pointHitRadius: 10,
         data,
         spanGaps: false,
