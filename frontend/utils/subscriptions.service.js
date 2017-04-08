@@ -1,7 +1,7 @@
 import getInstance from './axiosConfig';
 
 export default function Subscriptions() {
-  const url = '/subscriptions';
+  const url = '/db';
 
   return {
     getAll: () => getInstance()
