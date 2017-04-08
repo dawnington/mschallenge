@@ -29,7 +29,7 @@ app.use(bodyParser.json());
 //   extended: true,
 // }));
 
-app.get('/subscriptions', (req, res, next) => {
+app.get('/db', (req, res, next) => {
   pg.connect(conString, (err, client, done) => {
     if (err) {
       return next(err);
@@ -46,7 +46,7 @@ app.get('/subscriptions', (req, res, next) => {
   });
 });
 
-app.post('/subscriptions', (req, res, next) => {
+app.post('/db', (req, res, next) => {
   const subscription = req.body;
 
   pg.connect(conString, (err, client, done) => {
