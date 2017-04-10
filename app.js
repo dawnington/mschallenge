@@ -25,9 +25,6 @@ app.get('/', (request, response) => {
 });
 
 app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({
-//   extended: true,
-// }));
 
 app.get('/db', (req, res, next) => {
   pg.connect(process.env.DATABASE_URL || conString, (err, client, done) => {

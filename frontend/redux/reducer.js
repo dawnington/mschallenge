@@ -12,6 +12,7 @@ const initialState = new Map({
   initialized: false,
   formOpen: false,
   anchorEl: null,
+  chartFilter: 6,
   subscriptions: new Map(),
   newSubscription: new EmptySubscription(),
   formErrors: new EmptySubscription(),
@@ -52,6 +53,10 @@ function addErrors(state, errors) {
   return state.set('formErrors', errors);
 }
 
+function changeFilter(state, filter) {
+  return state.set('chartFilter', filter);
+}
+
 export default function reducer(state = initialState, action) {
   const reducers = {
     [actions.INITIALIZE_PAGE]               : () => initializeState(state),
@@ -59,6 +64,7 @@ export default function reducer(state = initialState, action) {
     [actions.TOGGLE_FORM]                   : () => toggleForm(state, action.el),
     [actions.UPDATE_INPUT]                  : () => updateForm(state, action.field, action.value),
     [actions.POST_SUBSCRIPTION.FAILURE]     : () => addErrors(state, action.errors),
+    [actions.CHANGE_FILTER]                  : () => changeFilter(state, action.filter),
     'DEFAULT'                               : () => state,
   };
 

@@ -39,12 +39,12 @@ export function previousMonthTotal(subscriptions) {
   return currencyFormat(batchTotal(subscriptions.filter(subscription => previousMonth(subscription))));
 }
 
-function lastSixMonths() {
+function lastMonths(filter) {
   const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   const currentMonthIndex = parseInt(moment().format('M')) - 1; // 3
   const sixMonths = [months[currentMonthIndex]];
 
-  for (let i = currentMonthIndex - 1; i > currentMonthIndex - 6; i--) {
+  for (let i = currentMonthIndex - 1; i > currentMonthIndex - filter; i--) {
     if (i < 0) {
       sixMonths.unshift(months[months.length + i]);
     } else {
@@ -55,17 +55,17 @@ function lastSixMonths() {
   return sixMonths;
 }
 
-export function getRevenueData(subscriptions) {
+export function getRevenueData(subscriptions, filter) {
   const groups = _.groupBy(subscriptions.toJS(), subscription => {
-    return moment(subscription.date).format('MM');
+    return moment(subscription.date).format('YY MM');
   });
   const sums = _.map(groups, batch => batchTotal(batch));
   let data = _.reverse(_.values(sums));
-  while (data.length < 6) { data.unshift(0) }
-  data = _.takeRight(data, 6);
+  while (data.length < filter) { data.unshift(0) }
+  data = _.takeRight(data, filter);
 
   return {
-    labels: lastSixMonths(),
+    labels: lastMonths(filter),
     datasets: [
       {
         fill: false,

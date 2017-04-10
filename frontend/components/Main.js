@@ -28,11 +28,12 @@ const Main = ({
   const formErrors = state.get('formErrors');
   const formOpen = state.get('formOpen');
   const anchorEl = state.get('anchorEl');
+  const filter = state.get('chartFilter');
 
   return (
     <div className="main">
       <RevenueCard subscriptions={subscriptions} />
-      <RevenueChart subscriptions={subscriptions} />
+      <RevenueChart subscriptions={subscriptions} filter={filter} />
       <SubscriptionsTable
         subscriptions={subscriptions}
         formOpen={formOpen}
