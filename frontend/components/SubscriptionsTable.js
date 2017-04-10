@@ -14,7 +14,7 @@ const styles = {
     marginTop: '20px',
   },
   table: {
-    height: '300px',
+    maxHeight: '300px',
   },
   iconButton: {
     padding: '0px',

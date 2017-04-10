@@ -16,7 +16,7 @@ export const fetchSubscriptions = {
     subscriptions,
   }),
   failure: error => ({
-    type: FETCH_SUBSCRIPTIONS.ERROR,
+    type: FETCH_SUBSCRIPTIONS.FAILURE,
     error,
   }),
 };

@@ -30,7 +30,7 @@ app.use(bodyParser.json());
 // }));
 
 app.get('/db', (req, res, next) => {
-  pg.connect(process.env.DATABASE_URL, (err, client, done) => {
+  pg.connect(process.env.DATABASE_URL || conString, (err, client, done) => {
     if (err) {
       return next(err);
     }
@@ -49,7 +49,7 @@ app.get('/db', (req, res, next) => {
 app.post('/db', (req, res, next) => {
   const subscription = req.body;
 
-  pg.connect(process.env.DATABASE_URL, (err, client, done) => {
+  pg.connect(process.env.DATABASE_URL || conString, (err, client, done) => {
     console.log(subscription);
     if (err) {
       return next(err);

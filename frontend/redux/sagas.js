@@ -14,7 +14,7 @@ function* fetchSubscriptions() {
     yield put(actions.fetchSubscriptions.success(response.data));
   } else {
     console.log('Problem fetching packages');
-    yield put(actions.fetchSubscriptions.error(response.data));
+    yield put(actions.fetchSubscriptions.failure(response.data));
   }
 }
 
