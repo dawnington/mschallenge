@@ -92,7 +92,7 @@ const SubscriptionsTable = ({
 };
 
 SubscriptionsTable.propTypes = {
-  subscriptions: PropTypes.object,
+  subscriptions: PropTypes.object.isRequired,
 };
 
 export default SubscriptionsTable;
