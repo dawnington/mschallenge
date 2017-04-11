@@ -1,7 +1,7 @@
 import getInstance from './axiosConfig';
 
 export default function Subscriptions() {
-  const url = '/db';
+  const url = '/subscriptions';
 
   return {
     getAll: () => getInstance()
@@ -10,6 +10,10 @@ export default function Subscriptions() {
       .catch(error => error.response),
     create: subscription => getInstance()
       .post(url, subscription)
+      .then(response => response)
+      .catch(error => error.response),
+    loadDB: data => getInstance()
+      .post('/subscriptions/load', data)
       .then(response => response)
       .catch(error => error.response),
   };

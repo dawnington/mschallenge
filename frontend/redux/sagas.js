@@ -5,15 +5,19 @@ import * as actions from './actions';
 import Subscriptions from '../utils/subscriptions.service';
 import newSubscriptionValidator from '../utils/formValidator';
 
+const seeds = require('../utils/payment_seed.json');
+
 const SubscriptionsAPI = Subscriptions();
 
 function* fetchSubscriptions() {
   yield put(actions.fetchSubscriptions.request());
   const response = yield call(SubscriptionsAPI.getAll);
   if (response.status === 200) {
+    if (response.data.length === 0) {
+      yield call(SubscriptionsAPI.loadDB, seeds);
+    }
     yield put(actions.fetchSubscriptions.success(response.data));
   } else {
-    console.log('Problem fetching packages');
     yield put(actions.fetchSubscriptions.failure(response.data));
   }
 }
@@ -28,7 +32,6 @@ function* createSubscription({ subscription }) {
       yield put(actions.postSubscription.success(response.data));
       yield call(fetchSubscriptions);
     } else {
-      console.log('Problem creating packages');
       yield put(actions.postSubscription.failure(response.data));
     }
   }

@@ -13,9 +13,6 @@ const styles = {
   paper: {
     marginTop: '20px',
   },
-  table: {
-    maxHeight: '300px',
-  },
   iconButton: {
     padding: '0px',
     width: '35px',
@@ -32,7 +29,8 @@ const SubscriptionsTable = ({
   toggleForm,
   anchorEl,
 }) => {
-  const rows = subscriptions.toJS();
+
+  const rows = _.reverse(_.sortBy(_.values(subscriptions.toJS()), sub => sub.date));
 
   const handleTouchTap = (event) => {
     event.preventDefault();
@@ -66,7 +64,7 @@ const SubscriptionsTable = ({
         <SubscriptionForm />
       </Popover>
       <div className="table">
-        <Table selectable={false} style={styles.table}>
+        <Table selectable={false} height="300px">
           <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
             <TableRow>
               <TableHeaderColumn>Name</TableHeaderColumn>

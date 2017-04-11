@@ -26,7 +26,7 @@ app.get('/', (request, response) => {
 
 app.use(bodyParser.json());
 
-app.get('/db', (req, res, next) => {
+app.get('/subscriptions', (req, res, next) => {
   pg.connect(process.env.DATABASE_URL || conString, (err, client, done) => {
     if (err) {
       return next(err);
@@ -43,11 +43,10 @@ app.get('/db', (req, res, next) => {
   });
 });
 
-app.post('/db', (req, res, next) => {
+app.post('/subscriptions', (req, res, next) => {
   const subscription = req.body;
 
   pg.connect(process.env.DATABASE_URL || conString, (err, client, done) => {
-    console.log(subscription);
     if (err) {
       return next(err);
     }
@@ -60,5 +59,30 @@ app.post('/db', (req, res, next) => {
 
       res.sendStatus(200);
     });
+  });
+});
+
+app.post('/subscriptions/load', (req, res, next) => {
+  const subscriptions = req.body;
+
+  pg.connect(process.env.DATABASE_URL || conString, (err, client, done) => {
+    console.log(subscriptions);
+    if (err) {
+      return next(err);
+    }
+
+    subscriptions.forEach(subscription => {
+      console.log(subscription);
+      client.query('INSERT INTO subscriptions (name, amount, date) VALUES ($1, $2, $3);', [subscription.name, subscription.amount, subscription.date], function (err, result) {
+        done();
+    })
+
+
+      if (err) {
+        return next(err)
+      }
+
+    });
+    res.sendStatus(200);
   });
 });
