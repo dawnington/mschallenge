@@ -66,13 +66,11 @@ app.post('/subscriptions/load', (req, res, next) => {
   const subscriptions = req.body;
 
   pg.connect(process.env.DATABASE_URL || conString, (err, client, done) => {
-    console.log(subscriptions);
     if (err) {
       return next(err);
     }
 
     subscriptions.forEach(subscription => {
-      console.log(subscription);
       client.query('INSERT INTO subscriptions (name, amount, date) VALUES ($1, $2, $3);', [subscription.name, subscription.amount, subscription.date], function (err, result) {
         done();
     })

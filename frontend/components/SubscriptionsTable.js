@@ -64,7 +64,7 @@ const SubscriptionsTable = ({
         <SubscriptionForm />
       </Popover>
       <div className="table">
-        <Table selectable={false} height="300px">
+        <Table selectable={false} height="500px">
           <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
             <TableRow>
               <TableHeaderColumn>Name</TableHeaderColumn>
