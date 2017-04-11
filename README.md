@@ -4,6 +4,8 @@ This is a simple revenue interface I made for a coding challenge. Features inclu
 a page summary with relevant data, an adjustable line graph comparing monthly
 revenues over past months, a table listing all subscriptions, and a form for entering new subscriptions.
 
+![screenshot]
+
 ### Backend
 
 While my backend experience has primarily been with Rails, I knew I didn't need
@@ -12,5 +14,7 @@ lightweight Express framework for my server.
 
 ### Front End
 
-For the front end I used the tools I'm most familiar with: React and Redux, with
+For the front end I chose the tools I'm most familiar with: React and Redux, with
 [`redux-saga`](https://github.com/redux-saga/redux-saga) for handling side effects.
+
+[screenshot]: ./public/assets/screenshot.png
