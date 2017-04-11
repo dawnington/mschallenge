@@ -5,7 +5,7 @@ export function currencyFormat(amount) {
   return `$${amount.toFixed(2)}`;
 }
 
-function batchTotal(subscriptions) {
+export function batchTotal(subscriptions) {
   const total = subscriptions
     .reduce((acc, sub) => {
       const amount = Number(sub.amount.replace(/[^0-9\.]+/g, ''));
@@ -39,7 +39,7 @@ export function previousMonthTotal(subscriptions) {
   return currencyFormat(batchTotal(subscriptions.filter(subscription => previousMonth(subscription))));
 }
 
-function lastMonths(filter) {
+export function lastMonths(filter) {
   const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   const currentMonthIndex = parseInt(moment().format('M')) - 1; // 3
   const currentYear = [months[currentMonthIndex]];
