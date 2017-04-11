@@ -38,6 +38,11 @@ The database uses PostgreSQl. Make sure you have PostgreSQL installed and open. 
 yarn db
 ```
 
+Run Webpack
+```
+webpack
+```
+
 Finally
 ```
 yarn start
