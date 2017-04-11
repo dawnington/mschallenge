@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const pg = require('pg');
 const bodyParser = require('body-parser');
+const open = require('open');
 
 const conString = 'postgres://localhost/ms_app';
 
@@ -62,25 +63,4 @@ app.post('/subscriptions', (req, res, next) => {
   });
 });
 
-app.post('/subscriptions/load', (req, res, next) => {
-  const subscriptions = req.body;
-
-  pg.connect(process.env.DATABASE_URL || conString, (err, client, done) => {
-    if (err) {
-      return next(err);
-    }
-
-    subscriptions.forEach(subscription => {
-      client.query('INSERT INTO subscriptions (name, amount, date) VALUES ($1, $2, $3);', [subscription.name, subscription.amount, subscription.date], function (err, result) {
-        done();
-    })
-
-
-      if (err) {
-        return next(err)
-      }
-
-    });
-    res.sendStatus(200);
-  });
-});
+open('http://localhost:3000/');

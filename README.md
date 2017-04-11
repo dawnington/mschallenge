@@ -20,3 +20,25 @@ For the front end I chose the tools I'm most familiar with: React and Redux, wit
 [`redux-saga`](https://github.com/redux-saga/redux-saga) for handling side effects.
 
 [screenshot]: ./public/assets/screenshot.png
+
+### Instructions
+Download the repository:
+
+```
+git clone https://github.com/dawnington/mschallenge.git
+```
+
+Install packages and dependencies:
+```
+npm install
+```
+
+The database uses PostgreSQl. Make sure you have PostgreSQL installed and open. To create and populate the database run
+```
+yarn db
+```
+
+Finally
+```
+yarn start
+```

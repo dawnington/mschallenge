@@ -5,17 +5,12 @@ import * as actions from './actions';
 import Subscriptions from '../utils/subscriptions.service';
 import newSubscriptionValidator from '../utils/formValidator';
 
-const seeds = require('../utils/payment_seed.json');
-
 const SubscriptionsAPI = Subscriptions();
 
 function* fetchSubscriptions() {
   yield put(actions.fetchSubscriptions.request());
   const response = yield call(SubscriptionsAPI.getAll);
   if (response.status === 200) {
-    if (response.data.length === 0) {
-      yield call(SubscriptionsAPI.loadDB, seeds);
-    }
     yield put(actions.fetchSubscriptions.success(response.data));
   } else {
     yield put(actions.fetchSubscriptions.failure(response.data));

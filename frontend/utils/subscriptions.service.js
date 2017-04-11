@@ -11,10 +11,6 @@ export default function Subscriptions() {
     create: subscription => getInstance()
       .post(url, subscription)
       .then(response => response)
-      .catch(error => error.response),
-    loadDB: data => getInstance()
-      .post('/subscriptions/load', data)
-      .then(response => response)
-      .catch(error => error.response),
+      .catch(error => error.response)
   };
 }
